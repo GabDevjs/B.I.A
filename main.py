@@ -8,6 +8,7 @@ import vosk
 import sys
 import pyttsx3
 import json
+import core
  
 engine = pyttsx3.init()# Init da função de voz
 #definição da voz
@@ -25,6 +26,9 @@ engine.setProperty('voice', voices[-2].id)
 def speak(text):
     engine.say(text)
     engine.runAndWait()
+    
+
+# Reconhecimento de fala 
 
 def int_or_str(text):
     """Função auxiliar para análise de argumentos."""
@@ -83,7 +87,9 @@ try:
         dump_fn = open(args.filename, "wb")
     else:
         dump_fn = None
-
+        
+    #loop do reconhecimento de fala
+    
     with sd.RawInputStream(samplerate=args.samplerate, blocksize = 8000, device=args.device, dtype='int16',
                             channels=1, callback=callback):
             print('#' * 80)
@@ -115,7 +121,11 @@ try:
                     text = result['text']
                     
                     print(text)
-                    speak(text)
+                    
+                    if text == 'que horas são' or text == 'me diga as horas':
+                        speak(core.Systeminfor.get_time())
+                        print(core.Systeminfor.get_time())
+                    
 
 except KeyboardInterrupt:
     print('\nDone')

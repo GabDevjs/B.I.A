@@ -1,7 +1,7 @@
 # interpretador de linguagem natural 
 import datetime
 
-class  Systeminfor:
+class  Systeminfor: 
     def __init__():
         pass
     @staticmethod
