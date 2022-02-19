@@ -1,21 +1,4 @@
 #Iciniando codigo
-
-
-"""
-    (codigo antigo) 
-
-import speech_recognition as sr
-#Cria um reconhecedor 
-r = sr.Recognizer()
-#Seletor de idiomas 
-Lv = 'pt'
-#Abrir p microfone para captura
-with sr.Microphone() as soure:
-    while True:
-        audio = r.listen(soure) #Define microfone como fonte de audio
-        
-        print(r.recognize_google(audio,  language=Lv)) #Define o idioma e trasnforma a sintacse em escrita 
-"""
 import argparse
 import os
 import queue
@@ -34,7 +17,8 @@ def int_or_str(text):
 
 def callback(indata, frames, time, status):
     """
-    Isso é chamado (de um thread separado) para cada bloco de áudio."""
+    Isso é chamado (de um thread separado) para cada bloco de áudio.
+    """
     if status:
         print(status, file=sys.stderr)
     q.put(bytes(indata))
