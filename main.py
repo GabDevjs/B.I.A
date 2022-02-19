@@ -1,12 +1,30 @@
 #Iciniando codigo
 import argparse
+from asyncio import streams
 import os
 import queue
 import sounddevice as sd
 import vosk
 import sys
+import pyttsx3
+import json
+ 
+engine = pyttsx3.init()# Init da função de voz
+#definição da voz
 
 q = queue.Queue()
+
+
+# ----------------------------
+
+#definição da voz
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[-2].id)
+
+#fução de fala de voz
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
 
 def int_or_str(text):
     """Função auxiliar para análise de argumentos."""
@@ -73,14 +91,31 @@ try:
             print('#' * 80)
 
             rec = vosk.KaldiRecognizer(model, args.samplerate)
-            while True:
+            ''' while True:
                 data = q.get()
                 if rec.AcceptWaveform(data):
-                    print(rec.Result())
+                    result = rec.Result()
+                    result = json.loads(result)
+                    
+                    print(result)
+                    
                 else:
                     print(rec.PartialResult())
                 if dump_fn is not None:
-                    dump_fn.write(data)
+                    dump_fn.write(data) '''
+                    
+            while True:
+                data = q.get(4000)
+                if len(data) == 0:
+                    break
+                if rec.AcceptWaveform(data):
+                    result = rec.Result()
+                    result = json.loads(result)
+                       
+                    text = result['text']
+                    
+                    print(text)
+                    speak(text)
 
 except KeyboardInterrupt:
     print('\nDone')
