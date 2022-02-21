@@ -97,6 +97,7 @@ try:
             print('#' * 80)
 
             rec = vosk.KaldiRecognizer(model, args.samplerate)
+            
             ''' while True:
                 data = q.get()
                 if rec.AcceptWaveform(data):
