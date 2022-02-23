@@ -15,7 +15,6 @@ engine = pyttsx3.init()# Init da função de voz
 
 q = queue.Queue()
 
-
 # ----------------------------
 
 #definição da voz
@@ -27,7 +26,6 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
     
-
 # Reconhecimento de fala 
 
 def int_or_str(text):
@@ -97,19 +95,6 @@ try:
             print('#' * 80)
 
             rec = vosk.KaldiRecognizer(model, args.samplerate)
-            
-            ''' while True:
-                data = q.get()
-                if rec.AcceptWaveform(data):
-                    result = rec.Result()
-                    result = json.loads(result)
-                    
-                    print(result)
-                    
-                else:
-                    print(rec.PartialResult())
-                if dump_fn is not None:
-                    dump_fn.write(data) '''
                     
             while True:
                 data = q.get(4000)
@@ -122,12 +107,13 @@ try:
                     text = result['text']
                     
                     print(text)
+                    speak(text)
                     
                     if text == 'que horas são' or text == 'me diga as horas':
                         speak(core.Systeminfor.get_time())
                         print(core.Systeminfor.get_time())
+                        
                     
-
 except KeyboardInterrupt:
     print('\nDone')
     parser.exit(0)
